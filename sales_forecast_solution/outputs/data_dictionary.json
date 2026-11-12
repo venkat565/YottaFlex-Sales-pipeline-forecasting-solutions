@@ -1,0 +1,102 @@
+{
+  "dim_territories": {
+    "territory_id": "Primary Key; format TER-0001",
+    "territory_name": "Unique human-readable territory name",
+    "region": "Controlled region: North | South | East | West | Central",
+    "currency": "Standard ISO currency code (USD)",
+    "effective_from": "Start date for territory definition (YYYY-MM-DD)",
+    "effective_to": "End date for territory definition (nullable)"
+  },
+  "dim_sales_reps": {
+    "rep_id": "Primary Key; format REP-000001",
+    "rep_name": "Full name of the sales representative",
+    "territory_id": "Foreign Key referencing dim_territories.territory_id",
+    "hire_date": "Rep onboarding date (YYYY-MM-DD)",
+    "employment_status": "Controlled status: Active | On Leave | Inactive"
+  },
+  "dim_accounts": {
+    "account_id": "Primary Key; format ACC-000001",
+    "account_name": "Account business entity name",
+    "segment": "Market tier: SMB | Mid-Market | Enterprise",
+    "industry": "Industry vertical classification",
+    "territory_id": "Foreign Key referencing dim_territories.territory_id",
+    "created_date": "Account creation timestamp (YYYY-MM-DD)"
+  },
+  "dim_stages": {
+    "stage_id": "Primary Key; format STAGE-01",
+    "stage_name": "Pipeline milestone name",
+    "default_probability": "Baseline conversion probability [0.0 - 1.0]",
+    "stage_order": "Sequential pipeline order index [1-7]"
+  },
+  "fct_opportunities": {
+    "opportunity_id": "Primary Key; format OPP-2026-000001",
+    "account_id": "Foreign Key referencing dim_accounts.account_id",
+    "rep_id": "Foreign Key referencing dim_sales_reps.rep_id",
+    "territory_id": "Foreign Key referencing dim_territories.territory_id",
+    "stage_id": "Foreign Key referencing dim_stages.stage_id",
+    "amount": "Source deal amount in stated currency",
+    "currency": "Transaction currency code (USD, EUR, GBP, INR)",
+    "amount_base_currency": "Normalized deal amount in base USD",
+    "created_date": "Deal creation date",
+    "expected_close_date": "Targeted closing date",
+    "lifecycle_state": "Open | Closed Won | Closed Lost"
+  },
+  "fct_stage_histories": {
+    "stage_history_id": "Primary Key; audit log entry ID",
+    "opportunity_id": "Foreign Key referencing fct_opportunities.opportunity_id",
+    "stage_id": "Foreign Key referencing dim_stages.stage_id",
+    "changed_at": "Timestamp when stage transition occurred",
+    "source": "Initial | RepUpdate | System"
+  },
+  "fct_activities": {
+    "activity_id": "Primary Key; format ACT-<opp_id>-01",
+    "opportunity_id": "Foreign Key referencing fct_opportunities.opportunity_id",
+    "rep_id": "Foreign Key referencing dim_sales_reps.rep_id",
+    "activity_type": "Touchpoint category: Email | Call | Meeting | Demo | Proposal Sent",
+    "activity_date": "Activity execution date",
+    "completed": "Binary flag (1 = completed, 0 = pending/cancelled)"
+  },
+  "fct_quotas": {
+    "quota_id": "Primary Key; format QUOTA-<rep_id>-2026Q1",
+    "rep_id": "Foreign Key referencing dim_sales_reps.rep_id",
+    "fiscal_quarter": "Target fiscal quarter label",
+    "quota_amount": "Assigned target booking revenue in USD",
+    "currency": "USD",
+    "effective_from": "Quarter start date"
+  },
+  "fct_historical_bookings": {
+    "booking_id": "Primary Key; format BOOK-0000001",
+    "opportunity_id": "Foreign Key referencing fct_opportunities.opportunity_id",
+    "booking_date": "Date deal was won and recognized",
+    "booking_amount": "Final realized booking value in USD",
+    "outcome": "Closed Won"
+  },
+  "fct_forecast_snapshots": {
+    "snapshot_id": "Primary Key; format FCST-<date>-<opp_id>",
+    "snapshot_date": "Point-in-time calculation date",
+    "opportunity_id": "Foreign Key referencing fct_opportunities.opportunity_id",
+    "stage_probability": "Stage probability as known strictly at snapshot date",
+    "age_days": "Deal age in days as-of snapshot date",
+    "days_to_close": "Days remaining until expected close date",
+    "activity_count": "Number of completed touchpoints logged prior to snapshot date",
+    "amount_base_currency": "Deal value in base currency (USD)",
+    "actual_won": "Ground truth outcome (Evaluation label only, NEVER training feature)",
+    "actual_booking": "Realized revenue (Evaluation label only)"
+  },
+  "fct_forecast_predictions": {
+    "snapshot_id": "Foreign Key referencing fct_forecast_snapshots.snapshot_id",
+    "predicted_probability": "Gradient-boosted ML predicted win probability",
+    "base_forecast": "Expected booking value: amount_base_currency * predicted_probability",
+    "best_case": "Upside scenario forecast (+20% probability multiplier)",
+    "worst_case": "Downside scenario forecast (-20% probability multiplier)",
+    "exception_flag": "Risk flags (e.g., STALE_NO_ACTIVITY)"
+  },
+  "fct_data_quality_exceptions": {
+    "record_id": "Identifier of the flagged record",
+    "table_name": "Target table where anomaly was observed",
+    "issue_type": "Data quality classification rule",
+    "severity": "CRITICAL | HIGH | MEDIUM | LOW",
+    "ground_truth": "Expected failure mode",
+    "expected_decision": "Prescribed automated remediation action"
+  }
+}

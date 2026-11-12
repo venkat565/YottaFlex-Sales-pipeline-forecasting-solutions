@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Mantine 7 DoubleNavbar & Enterprise AI Forecasting Design System
+   Combines Mantine Icon Rail + Redesign Preview CSS & 3D Interactive Effects
+   ========================================================================== */
+
+:root {
+  --nav-bg: #FFFFFF;
+  --nav-rail-bg: #0F172A;
+  --nav-border: #E5E7EB;
+  --nav-text: #0F172A;
+  --nav-text-muted: #64748B;
+  --brand-primary: #4F46E5;
+  --brand-primary-hover: #4338CA;
+  --card-bg: #FFFFFF;
+  --card-border: #E5E7EB;
+  --card-border-hover: #60A5FA;
+  --card-shadow-hover: 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35);
+}
+
+[data-theme="dark"] {
+  --nav-bg: #0D121F;
+  --nav-rail-bg: #090D16;
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --nav-text: #F8FAFC;
+  --nav-text-muted: #94A3B8;
+  --brand-primary: #6366F1;
+  --brand-primary-hover: #4F46E5;
+  --card-bg: #111827;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: #60A5FA;
+  --card-shadow-hover: 0 12px 28px rgba(59, 130, 246, 0.35), 0 4px 12px rgba(96, 165, 250, 0.30);
+}
+
+/* ---------------- Main Navbar Container ---------------- */
+.navbar {
+  height: 100vh;
+  width: 320px;
+  background-color: var(--nav-bg);
+  border-right: 1px solid var(--nav-border);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.06);
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+}
+
+/* ---------------- Left Icon Rail ---------------- */
+.aside {
+  width: 68px;
+  background: var(--nav-rail-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 0;
+  gap: 10px;
+  z-index: 20;
+}
+
+.logo {
+  margin-bottom: 18px;
+}
+
+.aiLogoGlow {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+  color: #FFFFFF;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.aiLogoGlow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+}
+
+.mainLinksContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+.mainLink {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94A3B8;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  cursor: pointer;
+}
+
+.mainLink:hover {
+  color: #60A5FA;
+  background-color: rgba(59, 130, 246, 0.18);
+  box-shadow: 0 0 14px rgba(96, 165, 250, 0.35);
+  transform: translateY(-1px);
+}
+
+.mainLink:active {
+  transform: scale(0.94);
+  background-color: rgba(59, 130, 246, 0.30);
+}
+
+/* Active State with Light Blue Glow */
+.mainLink[data-active] {
+  color: #FFFFFF;
+  background: #2563EB;
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.6);
+}
+
+.railBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: #EF4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+/* ---------------- Secondary Navigation Panel ---------------- */
+.main {
+  flex: 1;
+  background: var(--nav-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+  gap: 16px;
+}
+
+.header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.title {
+  color: var(--nav-text);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--nav-text-muted);
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.link:hover {
+  background-color: rgba(79, 70, 229, 0.06);
+  color: var(--nav-text);
+}
+
+.link[data-active] {
+  color: #4F46E5;
+  background-color: #EEF2FF;
+  border-color: #C7D2FE;
+  font-weight: 600;
+}
+
+.linkText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tagAi {
+  background: linear-gradient(135deg, #4F46E5, #6366F1) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 10px !important;
+}
+
+.tagAlert {
+  background: #EF4444 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 10px !important;
+}
+
+/* ---------------- AI Online Status Pill ---------------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #047857;
+  background: #D1FAE5;
+  border-radius: 999px;
+  padding: 6px 12px;
+  border: 1px solid rgba(4, 120, 87, 0.15);
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10B981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* ---------------- Redesign Interactive Cards & 3D Lift with Light Blue Glow ---------------- */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover, 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35));
+  border-color: var(--card-border-hover);
+}
+
+/* KPI Card Grid & Equal Size/Shape */
+.g4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.g4 > .card {
+  height: 100%;
+  min-height: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}

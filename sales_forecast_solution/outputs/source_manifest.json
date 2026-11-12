@@ -1,0 +1,20 @@
+{
+  "provenance": "fully synthetic sales data engine; normalized relational schema",
+  "seed": 20261022,
+  "generator": "src/generator.py",
+  "tables_generated": [
+    "dim_territories",
+    "dim_sales_reps",
+    "dim_accounts",
+    "dim_stages",
+    "fct_opportunities",
+    "fct_stage_histories",
+    "fct_activities",
+    "fct_quotas",
+    "fct_historical_bookings",
+    "fct_forecast_snapshots",
+    "fct_forecast_predictions",
+    "fct_data_quality_exceptions"
+  ],
+  "total_records": 4435
+}

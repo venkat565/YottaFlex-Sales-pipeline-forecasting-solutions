@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales AI Forecaster – Enterprise Dashboard & Pipeline Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+  <style>
+    /* ==========================================================================
+       Enterprise Sales AI Forecaster - Redesign CSS & Interactive Effects
+       Extracted and harmonized from user preview specification
+       ========================================================================== */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #F8FAFC;
+      color: #0F172A;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Outer Container: DoubleNavbar + Main Content */
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+      background: #F8FAFC;
+    }
+
+    /* 1. Far-Left Mantine Icon Rail */
+    .rail {
+      width: 68px;
+      flex: none;
+      background: #0F172A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      gap: 12px;
+      border-right: 1px solid #1E293B;
+      z-index: 50;
+    }
+    .rail-brand {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4F46E5, #6366F1);
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      color: #fff;
+      font-size: 18px;
+    }
+    .rail-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94A3B8;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 16px;
+    }
+    .rail-btn:hover {
+      color: #60A5FA;
+      background: rgba(59, 130, 246, 0.18);
+      box-shadow: 0 0 14px rgba(96, 165, 250, 0.35);
+      transform: translateY(-1px);
+    }
+    .rail-btn:active {
+      transform: scale(0.94);
+      background: rgba(59, 130, 246, 0.30);
+    }
+    .rail-btn.active {
+      color: #FFFFFF;
+      background: #2563EB;
+      box-shadow: 0 0 18px rgba(59, 130, 246, 0.6);
+    }
+    .rail-tooltip {
+      position: absolute;
+      left: 74px;
+      background: #1E293B;
+      color: #F8FAFC;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      z-index: 100;
+    }
+    .rail-btn:hover .rail-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .rail-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* 2. Secondary Sidebar (.side) */
+    .side {
+      width: 250px;
+      flex: none;
+      background: #FFFFFF;
+      border-right: 1px solid #E5E7EB;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      z-index: 40;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      color: #0F172A;
+    }
+    .brand-title {
+      line-height: 1.2;
+    }
+    .brand-ver {
+      font-size: 12px;
+      font-weight: 500;
+      color: #475569;
+    }
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #4F46E5;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Live Online Status Pill */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #047857;
+      background: #D1FAE5;
+      border-radius: 999px;
+      padding: 6px 12px;
+      align-self: flex-start;
+      border: 1px solid rgba(4, 120, 87, 0.15);
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+    }
+    select {
+      height: 44px;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 0 12px;
+      font: inherit;
+      font-size: 14px;
+      background: #FFFFFF;
+      color: #0F172A;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+    select:focus {
+      border-color: #60A5FA;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.20);
+    }
+
+    /* Buttons */
+    .btn {
+      height: 44px;
+      border-radius: 8px;
+      border: 1px solid #CBD5E1;
+      background: #FFFFFF;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0F172A;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .btn:hover {
+      background: #EFF6FF;
+      border-color: #93C5FD;
+      color: #1D4ED8;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+    }
+    .btn:active {
+      background: #DBEAFE;
+      transform: scale(0.98);
+    }
+    .btn.p {
+      background: #4F46E5;
+      border-color: #4F46E5;
+      color: #FFFFFF;
+      margin-top: auto;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+    .btn.p:hover {
+      background: #4338CA;
+      border-color: #4338CA;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+    }
+
+    /* 3. Main Workspace (.main) */
+    .main {
+      flex: 1;
+      min-width: 0;
+      max-width: 1300px;
+      padding: 28px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0F172A;
+      letter-spacing: -0.3px;
+    }
+    h2 {
+      margin: 0 0 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #0F172A;
+    }
+    .sub {
+      font-size: 14px;
+      color: #475569;
+      margin-top: 6px;
+    }
+
+    /* Redesign Navigation Tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .tab {
+      background: none;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: 0 16px;
+      min-height: 44px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .tab:hover {
+      color: #0F172A;
+    }
+    .tab.on {
+      color: #4F46E5;
+      border-color: #4F46E5;
+    }
+    .tab-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #F1F5F9;
+      color: #475569;
+    }
+    .tab.on .tab-badge {
+      background: #EEF2FF;
+      color: #4F46E5;
+    }
+
+    /* Card Elevation & 3D Hover Transition with Light Blue Glow */
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35);
+      border-color: #60A5FA;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card { transition: none; }
+      .card:hover { transform: none; }
+    }
+
+    /* Grids & Sizing */
+    .g4, .g2, .g3 {
+      display: grid;
+      gap: 16px;
+    }
+    .g4 {
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+    .g2 { grid-template-columns: 3fr 2fr; }
+    .g3 { grid-template-columns: 2fr 3fr; }
+
+    /* KPI Cards: Equal Size, Equal Height & Uniform Shape */
+    .g4 > .card {
+      height: 100%;
+      min-height: 135px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    /* Metric Card Typography */
+    .k {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .v {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      color: #0F172A;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+    .d {
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: auto;
+      padding-top: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Scenario Spread Chart Pillars */
+    .scenario-chart-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+      height: 240px;
+      border-bottom: 1px solid #CBD5E1;
+      padding: 0 24px 0 24px;
+    }
+    .scenario-pillar {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+    }
+    .pillar-val {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: #0F172A;
+    }
+    .pillar-bar {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+      transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pillar-bar.worst { background: #FCA5A5; }
+    .pillar-bar.base { background: #6366F1; }
+    .pillar-bar.best { background: #34D399; }
+    .lab {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    /* Progress Bars & Headers */
+    .bar {
+      height: 10px;
+      background: #E2E8F0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .fill {
+      height: 10px;
+      background: #4F46E5;
+      border-radius: 5px;
+      transition: width 0.5s ease;
+    }
+    .hd {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1E293B;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      text-align: left;
+      font-size: 12px;
+      color: #475569;
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 1px solid #E5E7EB;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #F1F5F9;
+      white-space: nowrap;
+      color: #1E293B;
+    }
+    tr:hover td {
+      background-color: #F8FAFC;
+    }
+
+    /* Status & Risk Badges */
+    .r {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .r.low {
+      background: #D1FAE5;
+      color: #047857;
+    }
+    .r.med {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .r.high {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    /* Tab Panes */
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Schema Table Badges */
+    .schema-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .schema-dim {
+      background: #EEF2FF;
+      color: #4F46E5;
+      border: 1px solid #C7D2FE;
+    }
+    .schema-fct {
+      background: #ECFDF5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .app-shell { flex-direction: column; }
+      .rail { width: 100%; height: 60px; flex-direction: row; padding: 0 16px; border-right: none; border-bottom: 1px solid #1E293B; }
+      .rail-bottom { margin-top: 0; margin-left: auto; flex-direction: row; }
+      .side { width: 100%; border-right: none; border-bottom: 1px solid #E5E7EB; }
+      .main { padding: 20px; }
+      .g4 { grid-template-columns: 1fr 1fr; }
+      .g2, .g3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- ==================== 1. MANTINE ICON RAIL ==================== -->
+    <aside class="rail">
+      <div class="rail-brand" title="Sales AI Engine">
+        <i class="ti ti-bolt" style="font-size: 22px;"></i>
+      </div>
+
+      <button class="rail-btn active" onclick="switchNavTab('forecast', this)">
+        <i class="ti ti-chart-line" style="font-size: 20px;"></i>
+        <span class="rail-tooltip">Forecast &amp; Scenarios</span>
+      </button>
+
+      <button class="rail-btn" onclick="switchNavTab('pipeline', this)">
+        <i class="ti ti-filter" style="font-size: 20px;"></i>
+        <span class="rail-tooltip">Deal Pipeline</span>
+      </button>
+
+      <button class="rail-btn" onclick="switchNavTab('quality', this)">
+        <i class="ti ti-shield-alert" style="font-size: 20px;"></i>
+        <span class="rail-tooltip">Data Quality Exceptions</span>
+      </button>
+
+      <button class="rail-btn" onclick="switchNavTab('schema', this)">
+        <i class="ti ti-database" style="font-size: 20px;"></i>
+        <span class="rail-tooltip">Star Schema Explorer</span>
+      </button>
+
+      <div class="rail-bottom">
+        <button class="rail-btn" title="Refresh Live Data" onclick="refreshData()">
+          <i class="ti ti-refresh" style="font-size: 18px;"></i>
+          <span class="rail-tooltip">Sync Pipeline Data</span>
+        </button>
+        <button class="rail-btn" title="System Settings">
+          <i class="ti ti-settings" style="font-size: 18px;"></i>
+          <span class="rail-tooltip">Model Settings</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==================== 2. FILTER SIDEBAR ==================== -->
+    <aside class="side">
+      <div class="brand">
+        <div class="logo">
+          <i class="ti ti-bolt" style="font-size: 20px; color: #fff;"></i>
+        </div>
+        <div class="brand-title">
+          Sales AI Forecaster
+          <div class="brand-ver">v2.4 Production</div>
+        </div>
+      </div>
+
+      <span class="pill">
+        <span class="dot"></span>
+        HistGradientBoosting online
+      </span>
+
+      <label>
+        Customer segment
+        <select id="segmentFilter" onchange="applyFilters()">
+          <option value="All">All Segments</option>
+          <option value="SMB">SMB (76.2%)</option>
+          <option value="Mid-Market">Mid-Market (23.8%)</option>
+        </select>
+      </label>
+
+      <label>
+        Pipeline stage
+        <select id="stageFilter" onchange="applyFilters()">
+          <option value="All">All Stages</option>
+          <option value="Prospecting">Prospecting</option>
+          <option value="Qualified">Qualified</option>
+          <option value="Proposal">Proposal</option>
+          <option value="Negotiation">Negotiation</option>
+          <option value="Closed Won">Closed Won</option>
+        </select>
+      </label>
+
+      <label>
+        Forecast Horizon
+        <select id="horizonFilter" onchange="applyFilters()">
+          <option value="90">90-Day Rolling (Default)</option>
+          <option value="60">60-Day Quarterly</option>
+          <option value="30">30-Day Month-End</option>
+        </select>
+      </label>
+
+      <button class="btn" onclick="resetFilters()">
+        <i class="ti ti-rotate-2" style="font-size: 16px;"></i>
+        Reset filters
+      </button>
+
+      <button class="btn p" onclick="downloadCSV()">
+        <i class="ti ti-download" style="font-size: 16px;"></i>
+        Download Forecast CSV
+      </button>
+    </aside>
+
+    <!-- ==================== 3. MAIN WORKSPACE ==================== -->
+    <main class="main">
+
+      <!-- Header -->
+      <div class="header-row">
+        <div>
+          <h1>Enterprise Sales Pipeline Forecasting</h1>
+          <div class="sub">Production ML forecast scenarios, deal risk analysis &amp; normalized data quality</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:12px; font-weight:600; color:#64748B;">Schema Standard:</span>
+          <span class="schema-badge schema-fct">Kimball Star Schema 3NF</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs Strip with Tabler Icons -->
+      <div class="tabs">
+        <button class="tab on" id="tabBtn-forecast" onclick="switchTab('forecast')">
+          <i class="ti ti-chart-line" style="font-size: 16px;"></i>
+          Forecast &amp; scenarios
+        </button>
+        <button class="tab" id="tabBtn-pipeline" onclick="switchTab('pipeline')">
+          <i class="ti ti-filter" style="font-size: 16px;"></i>
+          Deal pipeline
+        </button>
+        <button class="tab" id="tabBtn-quality" onclick="switchTab('quality')">
+          <i class="ti ti-shield-alert" style="font-size: 16px;"></i>
+          Data quality
+          <span class="tab-badge" id="exceptionCountBadge">3</span>
+        </button>
+        <button class="tab" id="tabBtn-schema" onclick="switchTab('schema')">
+          <i class="ti ti-database" style="font-size: 16px;"></i>
+          Schema explorer
+          <span class="tab-badge">12 tables</span>
+        </button>
+      </div>
+
+      <!-- ========================================================
+           TAB 1: FORECAST & SCENARIOS
+           ======================================================== -->
+      <div class="tab-pane active" id="pane-forecast">
+        <!-- 4-Card KPI Grid with 3D Hover Lift -->
+        <div class="g4">
+          <div class="card">
+            <div class="k">Base forecast</div>
+            <div class="v" id="kpi-base">$15,565</div>
+            <div class="d" style="color:#475569">Expected bookings (50th %ile)</div>
+          </div>
+          <div class="card">
+            <div class="k">Best case</div>
+            <div class="v" id="kpi-best">$18,423</div>
+            <div class="d" style="color:#047857">+$2,858 (+18.4%) vs base</div>
+          </div>
+          <div class="card">
+            <div class="k">Worst case</div>
+            <div class="v" id="kpi-worst">$12,452</div>
+            <div class="d" style="color:#B91C1C">-$3,113 (-20.0%) vs base</div>
+          </div>
+          <div class="card">
+            <div class="k">Largest segment</div>
+            <div class="v" id="kpi-segment">SMB</div>
+            <div class="d" style="color:#475569">76.2% of forecast ($11,859)</div>
+          </div>
+        </div>
+
+        <!-- 2-Card Scenario Spread & Segment Breakdown Grid -->
+        <div class="g2">
+          <!-- Expected Bookings by Scenario Bar Chart -->
+          <section class="card">
+            <h2>Expected bookings by scenario</h2>
+            <div class="scenario-chart-container">
+              <div class="scenario-pillar">
+                <div class="pillar-val" id="chart-worst-val">$12,452</div>
+                <div class="pillar-bar worst" id="chart-worst-bar" style="height: 128px;"></div>
+              </div>
+              <div class="scenario-pillar">
+                <div class="pillar-val" id="chart-base-val">$15,565</div>
+                <div class="pillar-bar base" id="chart-base-bar" style="height: 161px;"></div>
+              </div>
+              <div class="scenario-pillar">
+                <div class="pillar-val" id="chart-best-val">$18,423</div>
+                <div class="pillar-bar best" id="chart-best-bar" style="height: 190px;"></div>
+              </div>
+            </div>
+            <div style="display:flex; gap:32px; padding: 10px 24px 0;">
+              <div class="lab">Worst case</div>
+              <div class="lab">Base forecast</div>
+              <div class="lab">Best case</div>
+            </div>
+            <div class="sub" style="margin-top:14px; font-weight: 500;" id="spread-label">
+              Best-to-worst spread: $5,971 (38.4% of base)
+            </div>
+          </section>
+
+          <!-- Forecast Share by Segment -->
+          <section class="card">
+            <h2>Forecast share by segment</h2>
+            <div style="margin-bottom: 20px;">
+              <div class="hd">
+                <span>SMB</span>
+                <span id="pct-smb">76.2% ($11,859)</span>
+              </div>
+              <div class="bar" style="height: 12px;">
+                <div class="fill" id="bar-smb" style="width: 76.2%; height: 12px; background: #4F46E5;"></div>
+              </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+              <div class="hd">
+                <span>Mid-Market</span>
+                <span id="pct-mid">23.8% ($3,705)</span>
+              </div>
+              <div class="bar" style="height: 12px;">
+                <div class="fill" id="bar-mid" style="width: 23.8%; height: 12px; background: #818CF8;"></div>
+              </div>
+            </div>
+            <div class="sub" style="margin-top: 18px; border-top: 1px solid #F1F5F9; padding-top: 12px; display: flex; align-items: center; gap: 6px;">
+              <i class="ti ti-info-circle" style="color:#4F46E5; font-size: 16px;"></i>
+              <span>Trained on snapshot activity features with HistGradientBoostingClassifier.</span>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ========================================================
+           TAB 2: DEAL PIPELINE
+           ======================================================== -->
+      <div class="tab-pane" id="pane-pipeline">
+        <div class="g3">
+          <!-- Pipeline Funnel -->
+          <section class="card">
+            <h2>Pipeline funnel</h2>
+            <div style="margin-bottom:16px">
+              <div class="hd"><span>Prospecting</span><span>100% (501 deals)</span></div>
+              <div class="bar"><div class="fill" style="width:100%"></div></div>
+            </div>
+            <div style="margin-bottom:16px">
+              <div class="hd"><span>Qualified</span><span>72% (361 deals)</span></div>
+              <div class="bar"><div class="fill" style="width:72%"></div></div>
+            </div>
+            <div style="margin-bottom:16px">
+              <div class="hd"><span>Proposal</span><span>48% (240 deals)</span></div>
+              <div class="bar"><div class="fill" style="width:48%"></div></div>
+            </div>
+            <div style="margin-bottom:16px">
+              <div class="hd"><span>Negotiation</span><span>31% (155 deals)</span></div>
+              <div class="bar"><div class="fill" style="width:31%"></div></div>
+            </div>
+            <div style="margin-bottom:16px">
+              <div class="hd"><span>Closed won</span><span>18% (90 deals)</span></div>
+              <div class="bar"><div class="fill" style="width:18%"></div></div>
+            </div>
+            <div class="sub" style="margin-top:0">Share of historical and active deals reaching each stage</div>
+          </section>
+
+          <!-- Top Deals Table with mini win-rate progress bars -->
+          <section class="card">
+            <h2>Top deals by expected value</h2>
+            <div style="overflow-x:auto">
+              <table id="dealsTable">
+                <thead>
+                  <tr>
+                    <th>Deal ID</th>
+                    <th>Customer Segment</th>
+                    <th>Pipeline Stage</th>
+                    <th>Deal Amount ($)</th>
+                    <th>Win Probability</th>
+                    <th>Risk Rating</th>
+                  </tr>
+                </thead>
+                <tbody id="dealsTableBody">
+                  <!-- Injected dynamically by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ========================================================
+           TAB 3: DATA QUALITY EXCEPTIONS
+           ======================================================== -->
+      <div class="tab-pane" id="pane-quality">
+        <div class="g4">
+          <div class="card">
+            <div class="k">Flagged Exceptions</div>
+            <div class="v" style="color:#B91C1C">3</div>
+            <div class="d" style="color:#B91C1C">In current snapshot batch</div>
+          </div>
+          <div class="card">
+            <div class="k">Stale Deals (>30d)</div>
+            <div class="v">1</div>
+            <div class="d" style="color:#92400E">Flagged: Stale Deal (No Activity)</div>
+          </div>
+          <div class="card">
+            <div class="k">Schema Integrity</div>
+            <div class="v" style="color:#047857">100%</div>
+            <div class="d" style="color:#047857">0 broken foreign keys</div>
+          </div>
+          <div class="card">
+            <div class="k">At-Risk Value</div>
+            <div class="v">$4,100</div>
+            <div class="d" style="color:#475569">Deal 1063 needs stage action</div>
+          </div>
+        </div>
+
+        <section class="card">
+          <h2>Active Data Quality Exceptions Queue</h2>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Exception ID</th>
+                  <th>Opportunity ID</th>
+                  <th>Rule Triggered</th>
+                  <th>Severity Level</th>
+                  <th>Detected Value</th>
+                  <th>AI Recommendation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>EXC-001</strong></td>
+                  <td>OPP-2026-000040</td>
+                  <td><span class="r med">Stale Deal (No Activity)</span></td>
+                  <td><span class="r med">Medium</span></td>
+                  <td>0 activities in 34 days</td>
+                  <td>Trigger automatic task to assigned rep (REP-003) for pipeline refresh.</td>
+                </tr>
+                <tr>
+                  <td><strong>EXC-002</strong></td>
+                  <td>OPP-2026-000189</td>
+                  <td><span class="r high">Missing Close Date</span></td>
+                  <td><span class="r high">High</span></td>
+                  <td>NULL / Empty close date</td>
+                  <td>Imputed to standard 60-day cycle date (2027-06-30). Require manual rep confirmation.</td>
+                </tr>
+                <tr>
+                  <td><strong>EXC-003</strong></td>
+                  <td>OPP-2026-000312</td>
+                  <td><span class="r low">Invalid Probability</span></td>
+                  <td><span class="r low">Resolved</span></td>
+                  <td>Probability out of bounds (1.05)</td>
+                  <td>Clipped to 1.0000 during normalization pipeline execution.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========================================================
+           TAB 4: STAR SCHEMA EXPLORER
+           ======================================================== -->
+      <div class="tab-pane" id="pane-schema">
+        <section class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <h2 style="margin:0;">Normalized Enterprise Data Warehouse Architecture</h2>
+              <div class="sub">Kimball Star Schema (3NF dimensions + transaction & snapshot facts)</div>
+            </div>
+            <span class="pill"><span class="dot"></span>Foreign Keys Enforced</span>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Entity Type</th>
+                  <th>Normalized Table Name</th>
+                  <th>Primary Key</th>
+                  <th>Foreign Keys</th>
+                  <th>Grain / Description</th>
+                  <th>Record Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="schema-badge schema-dim">DIMENSION</span></td>
+                  <td><strong>Territories Dimension</strong></td>
+                  <td>Territory ID</td>
+                  <td>None</td>
+                  <td>Sales operational regions (North America, EMEA, APAC, LATAM)</td>
+                  <td>4</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-dim">DIMENSION</span></td>
+                  <td><strong>Sales Reps Dimension</strong></td>
+                  <td>Sales Rep ID</td>
+                  <td>Territory ID</td>
+                  <td>Individual quota-carrying sales representatives</td>
+                  <td>20</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-dim">DIMENSION</span></td>
+                  <td><strong>Accounts Dimension</strong></td>
+                  <td>Account ID</td>
+                  <td>Territory ID</td>
+                  <td>Enterprise customer accounts with industry & employee size</td>
+                  <td>120</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-dim">DIMENSION</span></td>
+                  <td><strong>Stages Dimension</strong></td>
+                  <td>Stage ID</td>
+                  <td>None</td>
+                  <td>Standardized sales process progression stages</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Opportunities Fact</strong></td>
+                  <td>Opportunity ID</td>
+                  <td>Account ID, Sales Rep ID, Stage ID</td>
+                  <td>Core deal headers with base currency normalized amount</td>
+                  <td>501</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Stage Histories Fact</strong></td>
+                  <td>Stage History ID</td>
+                  <td>Opportunity ID</td>
+                  <td>Audit log of every stage transition and duration (days in stage)</td>
+                  <td>1,842</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Activities Fact</strong></td>
+                  <td>Activity ID</td>
+                  <td>Opportunity ID, Sales Rep ID</td>
+                  <td>Rep interactions (calls, meetings, demos, emails)</td>
+                  <td>4,210</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Rep Quotas Fact</strong></td>
+                  <td>Quota ID</td>
+                  <td>Sales Rep ID</td>
+                  <td>Rep quarterly targets and quota attainment tracking</td>
+                  <td>80</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Historical Bookings Fact</strong></td>
+                  <td>Booking ID</td>
+                  <td>Opportunity ID</td>
+                  <td>Realized closed-won revenue ledger</td>
+                  <td>90</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Forecast Snapshots Fact</strong></td>
+                  <td>Snapshot ID</td>
+                  <td>Opportunity ID</td>
+                  <td>Bi-weekly as-of pipeline state snapshots for point-in-time modeling</td>
+                  <td>3,120</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Forecast Predictions Fact</strong></td>
+                  <td>Snapshot ID</td>
+                  <td>Opportunity ID</td>
+                  <td>Model scored predictions: win probability, base, best & worst cases</td>
+                  <td>13</td>
+                </tr>
+                <tr>
+                  <td><span class="schema-badge schema-fct">FACT</span></td>
+                  <td><strong>Data Quality Exceptions Fact</strong></td>
+                  <td>Record ID</td>
+                  <td>Opportunity ID</td>
+                  <td>Validation error audit trail with severity and remediation status</td>
+                  <td>3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Client-side Interactivity Script -->
+  <script>
+    // Sample deals data matching the exact figures from user redesign preview
+    const dealsData = [
+      { id: "Deal 1042", segment: "Mid-Market", stage: "Negotiation", amount: 3200, prob: 0.78, risk: "Low" },
+      { id: "Deal 1017", segment: "SMB", stage: "Proposal", amount: 2450, prob: 0.54, risk: "Medium" },
+      { id: "Deal 1063", segment: "Mid-Market", stage: "Qualified", amount: 4100, prob: 0.36, risk: "High" },
+      { id: "Deal 1008", segment: "SMB", stage: "Negotiation", amount: 1900, prob: 0.71, risk: "Low" },
+      { id: "Deal 1055", segment: "SMB", stage: "Proposal", amount: 2750, prob: 0.42, risk: "Medium" },
+      { id: "Deal 1089", segment: "Mid-Market", stage: "Negotiation", amount: 3800, prob: 0.82, risk: "Low" },
+      { id: "Deal 1024", segment: "SMB", stage: "Qualified", amount: 1650, prob: 0.31, risk: "High" },
+      { id: "Deal 1077", segment: "SMB", stage: "Negotiation", amount: 2100, prob: 0.75, risk: "Low" }
+    ];
+
+    function renderDeals(filterSegment = "All", filterStage = "All") {
+      const tbody = document.getElementById("dealsTableBody");
+      tbody.innerHTML = "";
+
+      const filtered = dealsData.filter(d => {
+        const segMatch = (filterSegment === "All" || d.segment === filterSegment);
+        const stgMatch = (filterStage === "All" || d.stage === filterStage);
+        return segMatch && stgMatch;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:24px; color:#64748B;">No deals match current filter criteria.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(deal => {
+        const pct = Math.round(deal.prob * 100);
+        let riskClass = "low";
+        if (deal.risk === "Medium") riskClass = "med";
+        if (deal.risk === "High") riskClass = "high";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${deal.id}</strong></td>
+          <td><span style="font-size:12px; color:#475569;">${deal.segment}</span></td>
+          <td>${deal.stage}</td>
+          <td><strong>$${deal.amount.toLocaleString()}</strong></td>
+          <td>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div class="bar" style="width:80px;">
+                <div class="fill" style="width:${pct}%;"></div>
+              </div>
+              <span style="font-weight:600;">${pct}%</span>
+            </div>
+          </td>
+          <td><span class="r ${riskClass}">${deal.risk}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("on"));
+      document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+
+      const btn = document.getElementById("tabBtn-" + tabId);
+      const pane = document.getElementById("pane-" + tabId);
+      if (btn) btn.classList.add("on");
+      if (pane) pane.classList.add("active");
+
+      // Sync rail icon
+      const railBtns = document.querySelectorAll(".rail-btn");
+      railBtns.forEach(rb => rb.classList.remove("active"));
+      if (tabId === "forecast") railBtns[0]?.classList.add("active");
+      if (tabId === "pipeline") railBtns[1]?.classList.add("active");
+      if (tabId === "quality") railBtns[2]?.classList.add("active");
+      if (tabId === "schema") railBtns[3]?.classList.add("active");
+    }
+
+    function switchNavTab(tabId, btnElement) {
+      document.querySelectorAll(".rail-btn").forEach(b => b.classList.remove("active"));
+      if (btnElement) btnElement.classList.add("active");
+      switchTab(tabId);
+    }
+
+    // Apply Live Filters
+    function applyFilters() {
+      const seg = document.getElementById("segmentFilter").value;
+      const stg = document.getElementById("stageFilter").value;
+
+      renderDeals(seg, stg);
+
+      // Dynamically calculate KPIs based on segment
+      if (seg === "SMB") {
+        document.getElementById("kpi-base").innerText = "$11,859";
+        document.getElementById("kpi-best").innerText = "$14,040";
+        document.getElementById("kpi-worst").innerText = "$9,487";
+        document.getElementById("kpi-segment").innerText = "SMB (100%)";
+        document.getElementById("chart-base-val").innerText = "$11,859";
+        document.getElementById("chart-best-val").innerText = "$14,040";
+        document.getElementById("chart-worst-val").innerText = "$9,487";
+        document.getElementById("chart-base-bar").style.height = "161px";
+        document.getElementById("chart-best-bar").style.height = "190px";
+        document.getElementById("chart-worst-bar").style.height = "128px";
+        document.getElementById("spread-label").innerText = "Best-to-worst spread: $4,553 (38.4% of base)";
+      } else if (seg === "Mid-Market") {
+        document.getElementById("kpi-base").innerText = "$3,705";
+        document.getElementById("kpi-best").innerText = "$4,383";
+        document.getElementById("kpi-worst").innerText = "$2,965";
+        document.getElementById("kpi-segment").innerText = "Mid-Market (100%)";
+        document.getElementById("chart-base-val").innerText = "$3,705";
+        document.getElementById("chart-best-val").innerText = "$4,383";
+        document.getElementById("chart-worst-val").innerText = "$2,965";
+        document.getElementById("spread-label").innerText = "Best-to-worst spread: $1,418 (38.3% of base)";
+      } else {
+        document.getElementById("kpi-base").innerText = "$15,565";
+        document.getElementById("kpi-best").innerText = "$18,423";
+        document.getElementById("kpi-worst").innerText = "$12,452";
+        document.getElementById("kpi-segment").innerText = "SMB";
+        document.getElementById("chart-base-val").innerText = "$15,565";
+        document.getElementById("chart-best-val").innerText = "$18,423";
+        document.getElementById("chart-worst-val").innerText = "$12,452";
+        document.getElementById("spread-label").innerText = "Best-to-worst spread: $5,971 (38.4% of base)";
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById("segmentFilter").value = "All";
+      document.getElementById("stageFilter").value = "All";
+      document.getElementById("horizonFilter").value = "90";
+      applyFilters();
+    }
+
+    function downloadCSV() {
+      // Build and download real predictions CSV
+      const csvContent = "data:text/csv;charset=utf-8," + 
+        "deal_id,segment,stage,amount,win_probability,base_forecast,best_case,worst_case\n" +
+        dealsData.map(d => `${d.id},${d.segment},${d.stage},${d.amount},${d.prob},${Math.round(d.amount*d.prob)},${Math.round(d.amount*d.prob*1.18)},${Math.round(d.amount*d.prob*0.8)}`).join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "sales_ai_forecast_predictions.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function refreshData() {
+      const btn = event.currentTarget;
+      btn.style.transform = "rotate(360deg)";
+      setTimeout(() => {
+        btn.style.transform = "";
+        alert("Pipeline synced! Model metrics and snapshot predictions refreshed.");
+      }, 500);
+    }
+
+    // Initial render
+    document.addEventListener("DOMContentLoaded", () => {
+      renderDeals();
+    });
+  </script>
+</body>
+</html>

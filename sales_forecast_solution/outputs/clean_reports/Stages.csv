@@ -1,0 +1,8 @@
+Stage ID,Pipeline Stage,Default Probability,Stage Order
+STAGE-01,Prospecting,0.05,1
+STAGE-02,Qualification,0.15,2
+STAGE-03,Discovery,0.3,3
+STAGE-04,Proposal,0.55,4
+STAGE-05,Negotiation,0.75,5
+STAGE-06,Closed Won,1.0,6
+STAGE-07,Closed Lost,0.0,7

@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "rep_pk_unique": true,
+    "account_pk_unique": true,
+    "opportunity_rep_fk_valid": true,
+    "opportunity_account_fk_valid": true,
+    "snapshot_opportunity_fk_valid": true,
+    "snapshot_has_no_target_leakage": true,
+    "data_quality_exceptions_quarantined": 5,
+    "snapshot_rows": 599
+  },
+  "all_critical_checks_pass": true
+}
