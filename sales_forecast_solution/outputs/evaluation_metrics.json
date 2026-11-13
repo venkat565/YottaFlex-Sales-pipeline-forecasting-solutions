@@ -1,9 +1,9 @@
 {
-  "snapshot_date": "2027-04-30",
-  "evaluation_rows": 13,
-  "brier_score": 0.166,
-  "roc_auc": 0.8333,
-  "booking_mae": 1082.16,
-  "booking_rmse": 1703.0,
-  "booking_wape": 0.7244
+  "snapshot_date": "2027-07-31",
+  "evaluation_rows": 18,
+  "brier_score": 0.2996,
+  "roc_auc": 0.7222,
+  "booking_mae": 1723.04,
+  "booking_rmse": 2229.65,
+  "booking_wape": 0.6958
 }

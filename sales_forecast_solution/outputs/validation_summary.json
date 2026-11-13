@@ -7,7 +7,7 @@
     "snapshot_opportunity_fk_valid": true,
     "snapshot_has_no_target_leakage": true,
     "data_quality_exceptions_quarantined": 5,
-    "snapshot_rows": 599
+    "snapshot_rows": 23064
   },
   "all_critical_checks_pass": true
 }

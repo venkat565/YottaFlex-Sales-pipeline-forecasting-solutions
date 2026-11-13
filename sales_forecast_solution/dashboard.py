@@ -47,6 +47,31 @@ st.markdown(
         border-color: #60a5fa;
         box-shadow: 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35);
     }
+
+    /* ── Tab active underline: replace Streamlit red with light blue ── */
+    [data-baseweb="tab-highlight"],
+    div[data-baseweb="tab-highlight"] {
+        background-color: #38BDF8 !important;
+        background: #38BDF8 !important;
+    }
+    [data-baseweb="tab-border"],
+    div[data-baseweb="tab-border"] {
+        background-color: #E2E8F0 !important;
+    }
+    /* Active tab text & icon: light blue, not red */
+    button[data-baseweb="tab"][aria-selected="true"],
+    button[data-baseweb="tab"][aria-selected="true"] p,
+    button[data-baseweb="tab"][aria-selected="true"] span,
+    button[data-baseweb="tab"][aria-selected="true"] svg {
+        color: #0284C7 !important;
+        fill: #0284C7 !important;
+        font-weight: 700 !important;
+    }
+    /* Inactive tab hover: subtle light blue */
+    button[data-baseweb="tab"]:not([aria-selected="true"]):hover {
+        color: #0EA5E9 !important;
+        background-color: #F0F9FF !important;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -168,9 +193,6 @@ if not predictions_df.empty:
 else:
     filtered_df = pd.DataFrame()
 
-st.sidebar.markdown("---")
-st.sidebar.info("💡 Standalone interactive frontend available in `frontend/index.html`.")
-
 # -------------------------------------------------------------
 # Main Header & KPIs
 # -------------------------------------------------------------
@@ -207,10 +229,10 @@ st.divider()
 # -------------------------------------------------------------
 tab1, tab2, tab3, tab4 = st.tabs(
     [
-        "📈 Forecast & Scenarios",
-        "📋 Deal Pipeline",
-        "🛡️ Data Quality",
-        "🗄️ Schema Explorer",
+        "⚡ Forecast & Scenarios",
+        "🔁 Deal Pipeline",
+        "🛡 Data Quality",
+        "🗄 Schema Explorer",
     ]
 )
 
@@ -293,26 +315,39 @@ with tab2:
         display_df["Risk Rating"] = display_df["predicted_probability"].apply(assign_risk)
         display_df = display_df.sort_values(by="base_forecast", ascending=False).head(15)
 
-        # Normalize column headers with NO underscores
+        # Normalize column headers with NO underscores and scale probability to percentage
         display_df = display_df.rename(
             columns={
                 "opportunity_id": "Deal ID",
                 "segment": "Customer Segment",
                 "stage_name": "Pipeline Stage",
                 "amount_base_currency": "Deal Amount ($)",
-                "predicted_probability": "Win Probability",
                 "base_forecast": "Expected Value ($)",
             }
         )
+        display_df["Win Probability"] = (display_df["predicted_probability"] * 100).round(1)
+
+        cols_to_show = [
+            "Deal ID",
+            "Customer Segment",
+            "Pipeline Stage",
+            "Deal Amount ($)",
+            "Win Probability",
+            "Expected Value ($)",
+            "Risk Rating",
+        ]
 
         st.dataframe(
-            display_df,
+            display_df[cols_to_show],
             use_container_width=True,
             column_config={
                 "Deal Amount ($)": st.column_config.NumberColumn(format="$%.2f"),
                 "Expected Value ($)": st.column_config.NumberColumn(format="$%.2f"),
                 "Win Probability": st.column_config.ProgressColumn(
-                    format="%.0f%%", min_value=0, max_value=1
+                    format="%.0f%%",
+                    min_value=0,
+                    max_value=100,
+                    color="#10B981",
                 ),
             },
             hide_index=True,

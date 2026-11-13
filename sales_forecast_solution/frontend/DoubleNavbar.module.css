@@ -9,12 +9,12 @@
   --nav-border: #E5E7EB;
   --nav-text: #0F172A;
   --nav-text-muted: #64748B;
-  --brand-primary: #4F46E5;
-  --brand-primary-hover: #4338CA;
+  --brand-primary: #0EA5E9;
+  --brand-primary-hover: #0284C7;
   --card-bg: #FFFFFF;
   --card-border: #E5E7EB;
-  --card-border-hover: #60A5FA;
-  --card-shadow-hover: 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35);
+  --card-border-hover: #38BDF8;
+  --card-shadow-hover: 0 12px 28px rgba(14, 165, 233, 0.25), 0 4px 12px rgba(56, 189, 248, 0.35);
 }
 
 [data-theme="dark"] {
@@ -67,11 +67,11 @@
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  background: linear-gradient(135deg, #0EA5E9, #38BDF8);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
   color: #FFFFFF;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
@@ -79,7 +79,7 @@
 
 .aiLogoGlow:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.55);
 }
 
 .mainLinksContainer {
@@ -186,15 +186,17 @@
 }
 
 .link:hover {
-  background-color: rgba(79, 70, 229, 0.06);
-  color: var(--nav-text);
+  background-color: #E0F2FE;
+  color: #0284C7;
+  border-color: #BAE6FD;
 }
 
 .link[data-active] {
-  color: #4F46E5;
-  background-color: #EEF2FF;
-  border-color: #C7D2FE;
+  color: #0284C7;
+  background-color: #E0F2FE;
+  border-color: #38BDF8;
   font-weight: 600;
+  box-shadow: 0 1px 6px rgba(14, 165, 233, 0.18);
 }
 
 .linkText {
@@ -204,7 +206,7 @@
 }
 
 .tagAi {
-  background: linear-gradient(135deg, #4F46E5, #6366F1) !important;
+  background: linear-gradient(135deg, #0EA5E9, #38BDF8) !important;
   color: white !important;
   font-weight: 600 !important;
   font-size: 10px !important;

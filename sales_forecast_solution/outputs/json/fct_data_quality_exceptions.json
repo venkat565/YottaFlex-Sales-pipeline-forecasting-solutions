@@ -24,7 +24,7 @@
     "expected_decision":"exclude_duplicate_from_pipeline"
   },
   {
-    "record_id":"FCST-2026-01-31-OPP-2026-000002",
+    "record_id":"FCST-2026-01-31-OPP-2026-000007",
     "table_name":"fct_forecast_snapshots",
     "issue_type":"forecast_uses_final_outcome_data",
     "severity":"CRITICAL",
