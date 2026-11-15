@@ -20,32 +20,91 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Metric Cards: Equal Size, Equal Height, Shape & Light Blue Hover Lift */
-    div[data-testid="column"] {
-        display: flex;
-        flex-direction: column;
+    /* Column flex for full height stretching */
+    div[data-testid="column"],
+    div[data-testid="stColumn"] {
+        display: flex !important;
+        flex-direction: column !important;
     }
-    div[data-testid="column"] > div {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
+    div[data-testid="column"] > div,
+    div[data-testid="stColumn"] > div {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
     }
+
+    /* Horizontal block for charts: force full stretch */
+    div[data-testid="stHorizontalBlock"]:has([data-testid="stPlotlyChart"]) {
+        display: flex !important;
+        align-items: stretch !important;
+    }
+
+    /* All Cards: Equal 12px Edges, Uniform Border, Background & Same 3D Hover Lift */
+    div[data-testid="stMetric"],
+    div[data-testid="stHorizontalBlock"]:has([data-testid="stPlotlyChart"]) > div[data-testid="stColumn"],
+    div[data-testid="stColumn"]:has([data-testid="stPlotlyChart"]),
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        border-radius: 12px !important;
+        border: 1px solid rgba(128, 128, 128, 0.2) !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+        box-sizing: border-box !important;
+    }
+
+    div[data-testid="stMetric"]:hover,
+    div[data-testid="stHorizontalBlock"]:has([data-testid="stPlotlyChart"]) > div[data-testid="stColumn"]:hover,
+    div[data-testid="stColumn"]:has([data-testid="stPlotlyChart"]):hover,
+    div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        transform: translateY(-4px) !important;
+        border-color: #60a5fa !important;
+        box-shadow: 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35) !important;
+    }
+
+    /* Metric Cards: Equal Height, Equal Size & Uniform Shape */
     div[data-testid="stMetric"] {
-        border: 1px solid rgba(128, 128, 128, 0.2);
-        border-radius: 12px;
-        padding: 18px 20px;
-        min-height: 135px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-sizing: border-box;
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        padding: 18px 20px !important;
+        min-height: 135px !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
     }
-    div[data-testid="stMetric"]:hover {
-        transform: translateY(-4px);
-        border-color: #60a5fa;
-        box-shadow: 0 12px 28px rgba(59, 130, 246, 0.25), 0 4px 12px rgba(147, 197, 253, 0.35);
+
+    /* Chart Cards: Equal Height Top and Bottom, Equal 12px Edges */
+    div[data-testid="stHorizontalBlock"]:has([data-testid="stPlotlyChart"]) > div[data-testid="stColumn"],
+    div[data-testid="stColumn"]:has([data-testid="stPlotlyChart"]),
+    div[data-testid="stColumn"]:has(.js-plotly-plot),
+    div.stColumn:has([data-testid="stPlotlyChart"]),
+    div.stColumn:has(.js-plotly-plot) {
+        padding: 20px 24px !important;
+        height: 465px !important;
+        min-height: 465px !important;
+        max-height: 465px !important;
+        overflow: hidden !important;
+        align-self: stretch !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has([data-testid="stPlotlyChart"]) > div[data-testid="stColumn"] > div[data-testid="stVerticalBlock"],
+    div[data-testid="stColumn"]:has([data-testid="stPlotlyChart"]) > div,
+    div.stColumn:has(.js-plotly-plot) > div {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        flex: 1 1 auto !important;
+    }
+
+    /* Caption container inside chart cards: fixed height to guarantee exact bottom alignment */
+    div[data-testid="stHorizontalBlock"]:has([data-testid="stPlotlyChart"]) [data-testid="stCaptionContainer"] {
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        margin-top: auto !important;
     }
 
     /* ── Tab active underline: replace Streamlit red with light blue ── */
@@ -222,8 +281,6 @@ if not filtered_df.empty:
     col3.metric("Worst Case", f"${worst_val:,.0f}", f"-${diff_worst:,.0f} (-{pct_worst:.1f}%)", delta_color="inverse")
     col4.metric("Largest Segment", largest_seg, f"{largest_seg_pct:.1f}% of forecast")
 
-st.divider()
-
 # -------------------------------------------------------------
 # Navigation Tabs
 # -------------------------------------------------------------
@@ -243,7 +300,7 @@ with tab1:
     if filtered_df.empty:
         st.info("No records match the current filter selection.")
     else:
-        col_chart, col_seg = st.columns([3, 2])
+        col_chart, col_seg = st.columns([3, 2], border=True)
 
         with col_chart:
             st.subheader("Expected Bookings by Scenario")
@@ -260,8 +317,8 @@ with tab1:
                 )
             )
             fig_scenarios.update_layout(
-                height=320,
-                margin=dict(l=20, r=20, t=30, b=30),
+                height=290,
+                margin=dict(l=15, r=15, t=20, b=20),
                 plot_bgcolor="rgba(0,0,0,0)",
                 paper_bgcolor="rgba(0,0,0,0)",
                 yaxis=dict(showgrid=True, gridcolor="#E2E8F0", zeroline=False),
@@ -269,7 +326,10 @@ with tab1:
                 font=dict(family="Inter, sans-serif"),
             )
             st.plotly_chart(fig_scenarios, use_container_width=True)
-            st.caption(f"**Best-to-worst spread:** ${spread_val:,.0f} ({spread_pct:.1f}% of base)")
+            st.caption(
+                f"**Best-to-worst spread:** ${spread_val:,.0f} ({spread_pct:.1f}% of base)  \n"
+                "Uncertainty confidence band across active deals."
+            )
 
         with col_seg:
             st.subheader("Forecast Share by Segment")
@@ -281,12 +341,15 @@ with tab1:
                 hole=0.4,
             )
             fig_pie.update_layout(
-                height=320,
-                margin=dict(l=20, r=20, t=30, b=30),
+                height=290,
+                margin=dict(l=15, r=15, t=20, b=20),
                 font=dict(family="Inter, sans-serif"),
             )
             st.plotly_chart(fig_pie, use_container_width=True)
-            st.caption("Trained on snapshot activity features with HistGradientBoostingClassifier.")
+            st.caption(
+                "Trained on snapshot activity features with  \n"
+                "HistGradientBoostingClassifier."
+            )
 
 # -------------------------------------------------------------
 # TAB 2: Deal Pipeline

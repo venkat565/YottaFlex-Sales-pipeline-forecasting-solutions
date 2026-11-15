@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -345,29 +345,36 @@
       .card:hover { transform: none; }
     }
 
-    /* Grids & Sizing */
+    /* Grids & Sizing: Uniform Align-Items & Stretching */
     .g4, .g2, .g3 {
       display: grid;
       gap: 16px;
+      align-items: stretch;
     }
     .g4 {
       grid-template-columns: repeat(4, 1fr);
-      align-items: stretch;
       margin-bottom: 24px;
     }
     .g2 { grid-template-columns: 3fr 2fr; }
     .g3 { grid-template-columns: 2fr 3fr; }
 
-    /* KPI Cards: Equal Size, Equal Height & Uniform Shape */
-    .g4 > .card {
+    /* All Cards in Grids: Equal Size, Equal 12px Edges & Uniform Shape */
+    .g4 > .card,
+    .g2 > .card,
+    .g3 > .card {
       height: 100%;
-      min-height: 135px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       box-sizing: border-box;
       border-radius: 12px;
-      padding: 20px;
+      padding: 20px 24px;
+    }
+    .g4 > .card {
+      min-height: 135px;
+    }
+    .g2 > .card {
+      min-height: 380px;
     }
 
     /* Metric Card Typography */
